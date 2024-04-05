@@ -7,6 +7,7 @@ const query = ({ prismaService, model }) => {
     del,
     addWithLines,
     getOneWithDetail,
+    getAlltheBillsOfUser,
   });
 
   async function get() {
@@ -37,14 +38,31 @@ const query = ({ prismaService, model }) => {
     });
   }
 
+  async function getAlltheBillsOfUser(userId) {
+    return prismaService.bill.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+  }
+
   async function addWithLines(model) {
+    console.log(model);
     const billdetails = model.billdetails;
     const userId = model.userId;
     const billtype = model.billtype;
+    const customername = model.customername;
+    const shippingaddress = model.shippingaddress;
+    const note = model.note;
+    const dateoforder = new Date(model.dateoforder);
 
     return prismaService.bill.create({
       data: {
         billtype: billtype,
+        customername: customername,
+        shippingaddress: shippingaddress,
+        note: note,
+        dateoforder: dateoforder,
         userId: userId,
         totalPrice: model.totalPrice,
         billdetails: {

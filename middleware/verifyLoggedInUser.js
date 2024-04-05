@@ -13,7 +13,12 @@ const verifyJWT = (req, res, next) => {
       res.status(401).json({ message: "UnAuthorized" });
     } else {
       console.log("in abcd");
-      if (decoded.role == "CLINIC" || decoded.role == "USER") {
+      if (
+        decoded.role == "ADMIN" ||
+        decoded.role == "CUSTOMER" ||
+        decoded.role == "EMPLOYEE" ||
+        decoded.role == "MNTNANCEPERSON"
+      ) {
         req.user = decoded.email;
         next();
       } else {

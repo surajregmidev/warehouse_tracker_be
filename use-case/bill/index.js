@@ -3,6 +3,7 @@ const userRepository = require("../../data-access/user");
 const itemRepository = require("../../data-access/item");
 
 const createBillFun = require("./insert-bill");
+const selectBillFun = require("./select-bill");
 
 const createBillSer = createBillFun({
   billRepository,
@@ -10,8 +11,15 @@ const createBillSer = createBillFun({
   itemRepository,
 });
 
+const selectBillSer = selectBillFun({
+  billRepository,
+  userRepository,
+  itemRepository,
+});
+
 const services = Object.freeze({
   createBillSer,
+  selectBillSer,
 });
 
 module.exports = services;

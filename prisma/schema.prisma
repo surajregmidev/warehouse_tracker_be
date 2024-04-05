@@ -70,6 +70,11 @@ model Bill{
   user   User @relation(fields: [userId], references: [id])
   userId String @unique @db.ObjectId
 
+  customername String? 
+  shippingaddress String?
+  dateoforder DateTime?
+  note String?
+
   billtype Billtype @default(SALE)
   billdetails Billdetail[] @relation("billdetails")
 

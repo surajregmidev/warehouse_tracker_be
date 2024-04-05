@@ -45,7 +45,7 @@ const createClinic = ({ billRepository, userRepository, itemRepository }) => {
       }
       model.totalPrice = totalPrice;
       model.userId = loggedInUser.id;
-      const newBill = billRepository.addWithLines(model);
+      const newBill = await billRepository.addWithLines(model);
 
       return billRepository.getOneWithDetail(newBill.id);
     }

@@ -1,7 +1,20 @@
-const { createBillController } = require("../../controller/bill");
+const {
+  createBillController,
+  selectBillController,
+} = require("../../controller/bill");
 const verifyAdminJWT = require("../../middleware/verifyAdminPersonJWT");
+const verifyLoggedInUser = require("../../middleware/verifyLoggedInUser");
 const route = ({ router, makeExpressCallback }) => {
-  router.post("/", verifyAdminJWT, makeExpressCallback(createBillController));
+  router.post(
+    "/",
+    verifyLoggedInUser,
+    makeExpressCallback(createBillController)
+  );
+  router.get(
+    "/",
+    verifyLoggedInUser,
+    makeExpressCallback(selectBillController)
+  );
   return router;
 };
 
