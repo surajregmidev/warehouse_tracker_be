@@ -8,6 +8,9 @@ const selectBill = ({ billRepository, userRepository }) => {
     if (!loggedInUser) {
       throw new ValidationError("UnAuthorized!");
     }
+    if (loggedInUser.role == "EMPLOYEE") {
+      return billRepository.getAlltheBills();
+    }
     if (id) {
       const clinic = await billRepository.getOne(id);
       if (!clinic) {

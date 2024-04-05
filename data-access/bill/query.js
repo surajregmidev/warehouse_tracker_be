@@ -8,6 +8,7 @@ const query = ({ prismaService, model }) => {
     addWithLines,
     getOneWithDetail,
     getAlltheBillsOfUser,
+    getAlltheBills,
   });
 
   async function get() {
@@ -43,6 +44,16 @@ const query = ({ prismaService, model }) => {
       where: {
         userId: userId,
       },
+    });
+  }
+
+  async function getAlltheBills() {
+    return prismaService.bill.findMany({
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
     });
   }
 
