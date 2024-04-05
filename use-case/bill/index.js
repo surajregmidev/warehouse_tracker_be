@@ -4,6 +4,7 @@ const itemRepository = require("../../data-access/item");
 
 const createBillFun = require("./insert-bill");
 const selectBillFun = require("./select-bill");
+const updateBillFun = require("./update-bill-status");
 
 const createBillSer = createBillFun({
   billRepository,
@@ -16,10 +17,16 @@ const selectBillSer = selectBillFun({
   userRepository,
   itemRepository,
 });
+const updateBillSer = updateBillFun({
+  billRepository,
+  userRepository,
+  itemRepository,
+});
 
 const services = Object.freeze({
   createBillSer,
   selectBillSer,
+  updateBillSer,
 });
 
 module.exports = services;
