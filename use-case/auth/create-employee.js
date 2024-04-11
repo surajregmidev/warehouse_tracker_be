@@ -10,11 +10,11 @@ require("dotenv").config();
 const createEmployee = ({ authRepository }) => {
   return async function signup(info) {
     console.log(info);
-    const { email, password, fullName } = info;
+    const { email, password, fullName, role } = info;
     if (!email || !password) {
       throw new ValidationError("Email Or Password is required", 400);
     }
-    let role = "EMPLOYEE";
+    // let role = "EMPLOYEE";
     if (!role) {
       throw new ValidationError("Role is Required", 400);
     }

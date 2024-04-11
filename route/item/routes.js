@@ -5,6 +5,7 @@ const {
   deleteItemController,
 } = require("../../controller/item");
 const verifyAdminJWT = require("../../middleware/verifyAdminPersonJWT");
+const verifyAdminAndMaintenaceJWT = require("../../middleware/verifyAdminAndMainten");
 const verifyLoggedInUser = require("../../middleware/verifyLoggedInUser");
 const route = ({ router, makeExpressCallback }) => {
   router.post("/", verifyAdminJWT, makeExpressCallback(createItemController));
@@ -16,7 +17,7 @@ const route = ({ router, makeExpressCallback }) => {
   router.get("/:id", makeExpressCallback(selectItemController));
   router.post(
     "/:id",
-    verifyAdminJWT,
+    verifyAdminAndMaintenaceJWT,
     makeExpressCallback(updateItemController)
   );
   router.delete(

@@ -39,16 +39,62 @@ const query = ({ prismaService, model }) => {
     });
   }
 
-  async function getAlltheBillsOfUser(userId) {
+  async function getAlltheBillsOfUser(userId, query) {
+    const { searchKey } = query;
+    console.log("In get all the bills of user");
+    console.log(query);
     return prismaService.bill.findMany({
       where: {
         userId: userId,
+        OR: [
+          {
+            customername: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            shippingaddress: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            note: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+        ],
       },
     });
   }
 
-  async function getAlltheBills() {
+  async function getAlltheBills(query) {
+    const { searchKey } = query;
     return prismaService.bill.findMany({
+      where: {
+        OR: [
+          {
+            customername: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            shippingaddress: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+          {
+            note: {
+              contains: searchKey || "",
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
       orderBy: [
         {
           createdAt: "desc",

@@ -130,8 +130,8 @@ const query = ({ prismaService, model }) => {
   async function getOnlyEmployees(query) {
     const { searchKey } = query;
     let filters = {
-      role: Role.EMPLOYEE,
-      OR: [
+      OR: [{ role: Role.EMPLOYEE }, { role: Role.MNTNANCEPERSON }],
+      AND: [
         {
           email: {
             contains: searchKey || "",
@@ -149,7 +149,7 @@ const query = ({ prismaService, model }) => {
     return prismaService.user.findMany({
       where: filters,
       orderBy: {
-        fullName: "asc",
+        createdAt: "desc",
       },
     });
   }

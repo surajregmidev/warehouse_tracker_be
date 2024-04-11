@@ -1,7 +1,7 @@
 const ValidationError = require("../../error/validationError");
 
 const selectBill = ({ billRepository, userRepository }) => {
-  return async function select(user, id) {
+  return async function select(user, id, query) {
     console.log("The user is ");
     console.log(user);
     const loggedInUser = await userRepository.getByEmail(user);
@@ -9,22 +9,16 @@ const selectBill = ({ billRepository, userRepository }) => {
       throw new ValidationError("UnAuthorized!");
     }
     if (loggedInUser.role == "EMPLOYEE") {
-      return billRepository.getAlltheBills();
+      return billRepository.getAlltheBills(query);
     }
     if (id) {
-      const clinic = await billRepository.getOne(id);
-      if (!clinic) {
-        throw new ValidationError("Invalid Clinic ID");
+      const bill = await billRepository.getOne(id);
+      if (!bill) {
+        throw new ValidationError("Invalid bill  ID");
       }
-      let clinicOfUser = billRepository.getClinic(loggedInUser.id, id);
-      if (!clinicOfUser) {
-        throw new ValidationError(
-          "User Does not have Permission to View This Clinic"
-        );
-      }
-      return clinicOfUser;
+      return bill;
     } else {
-      return billRepository.getAlltheBillsOfUser(loggedInUser.id);
+      return billRepository.getAlltheBillsOfUser(loggedInUser.id, query);
     }
   };
 };
